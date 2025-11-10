@@ -19,9 +19,7 @@ AMyActor::AMyActor()
 
 	Missile = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Missile"));
 	Missile->SetupAttachment(Box);
-	Missile->SetMobility(EComponentMobility::Movable);
-	FRotator NewRotation = FRotator(0.0f, -90.0f, 0.0f);
-	Missile->SetRelativeRotation(NewRotation);
+	Missile->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_Rocket(TEXT("/Script/Engine.StaticMesh'/Game/P38/SM_Rocket.SM_Rocket'"));
 	if (SM_Rocket.Succeeded())
 	{
