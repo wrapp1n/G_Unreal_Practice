@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GenericTeamAgentInterface.h"
 #include "BaseCharacter.generated.h"
 
 class UInputAction;
+class UAIPerceptionStimuliSourceComponent;
 
 UENUM(BlueprintType)
 enum class EWeaponState : uint8
@@ -19,7 +21,7 @@ enum class EWeaponState : uint8
 
 
 UCLASS()
-class PROJECT57_API ABaseCharacter : public ACharacter
+class PROJECT57_API ABaseCharacter : public ACharacter, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
@@ -60,6 +62,9 @@ public:
 	{
 		return Camera;
 	}
+
+	UPROPERTY(Category = Character, EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAIPerceptionStimuliSourceComponent> StimuliSource;
 
 
 	UFUNCTION(BlueprintCallable)
@@ -136,6 +141,9 @@ public:
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void SpawnHitEffect(FHitResult Hit);
+
 
 	UFUNCTION(BlueprintCallable)
 	void DoDeadEnd();
@@ -159,5 +167,27 @@ public:
 	void StartIronSight();
 
 	void StopIronSight();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character)
+	TObjectPtr<UParticleSystem> BloodEffect;
+
+
+//----------------------------------------------------------------------//
+// IGenericTeamAgentInterface
+//----------------------------------------------------------------------//
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character)
+	FGenericTeamId TeamID;
+
+	/** Assigns Team Agent to given TeamID */
+	virtual void SetGenericTeamId(const FGenericTeamId& InTeamID) override;
+
+	/** Retrieve team identifier in form of FGenericTeamId */
+	virtual FGenericTeamId GetGenericTeamId() const override;
+
+
+
+	
+	void DrawFrustum();
+
 
 };

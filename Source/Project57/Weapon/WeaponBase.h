@@ -52,11 +52,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Data)
 	TObjectPtr<UAnimMontage> ReloadMontage;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Data)
-	TObjectPtr<UParticleSystem> MuzzleFlash;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Data)
-	TObjectPtr<UParticleSystem> BloodEffect;
+	TObjectPtr<UParticleSystem> MuzzleFlash;
 
 	UFUNCTION(BlueprintCallable)
 	void Reload();
